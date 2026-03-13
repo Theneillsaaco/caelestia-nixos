@@ -27,8 +27,9 @@ let
         let
           intMatch = builtins.match "^([0-9]+)$" str;
           floatMatch = builtins.match "^([0-9]+\\.[0-9]+)$" str;
+          hasLeadingZero = builtins.match "^0[0-9].*$" str != null;
         in
-        if intMatch != null
+        if intMatch != null && !hasLeadingZero
         then lib.strings.toInt str
         else if floatMatch != null
         then lib.strings.toDouble str
