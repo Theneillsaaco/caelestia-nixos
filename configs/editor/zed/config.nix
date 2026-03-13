@@ -21,6 +21,9 @@
   userSettings = {
     buffer_font_family = "CaskaydiaCove Nerd Font";
     buffer_font_size = 16;
+
+    multi_cursor_modifier = "cmd_or_ctrl";
+
     languages = {
       Nix = {
         language_servers = [
@@ -28,14 +31,15 @@
           "!nil"
         ];
       };
+
       QML = {
         formatter = {
           external = {
+            command = "sh";
             arguments = [
               "-c"
               "tmp=$(mktemp --suffix .qml); cat > $tmp; qmlformat $tmp"
             ];
-            command = "sh";
           };
         };
       };
