@@ -68,7 +68,6 @@
       ];
     };
   };
-  multi_cursor_modifier = "cmd_or_ctrl";
   theme = {
     dark = "One Dark";
     light = "One Light";
