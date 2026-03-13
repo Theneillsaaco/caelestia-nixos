@@ -68,10 +68,5 @@
       ];
     };
   };
-  theme = {
-    dark = "One Dark";
-    light = "One Light";
-    mode = "system";
-  };
   ui_font_size = 16;
 }
