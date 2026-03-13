@@ -25,30 +25,30 @@ in
     programs.caelestia-dots = {
       enable = mkEnableOption "Enable Caelestia dotfiles";
 
-      # Module enable options
-      hypr = {
-        enable = mkEnableOption "Enable Hyprland window manager configuration" // { default = false; };
-      };
+      # # Module enable options
+      # hypr = {
+      #   enable = mkEnableOption "Enable Hyprland window manager configuration" // { default = false; };
+      # };
 
-      editor = {
-        enable = mkEnableOption "Enable editor configurations" // { default = false; };
-      };
+      # editor = {
+      #   enable = mkEnableOption "Enable editor configurations" // { default = false; };
+      # };
 
-      term = {
-        enable = mkEnableOption "Enable terminal configuration" // { default = false; };
-      };
+      # term = {
+      #   enable = mkEnableOption "Enable terminal configuration" // { default = false; };
+      # };
 
-      btop = {
-        enable = mkEnableOption "Enable btop system monitor" // { default = false; };
-      };
+      # btop = {
+      #   enable = mkEnableOption "Enable btop system monitor" // { default = false; };
+      # };
 
-      foot = {
-        enable = mkEnableOption "Enable foot terminal emulator" // { default = false; };
-      };
+      # foot = {
+      #   enable = mkEnableOption "Enable foot terminal emulator" // { default = false; };
+      # };
 
-      caelestia = {
-        enable = mkEnableOption "Enable Caelestia shell and CLI" // { default = true; };
-      };
+      # caelestia = {
+      #   enable = mkEnableOption "Enable Caelestia shell and CLI" // { default = true; };
+      # };
     };
   };
 

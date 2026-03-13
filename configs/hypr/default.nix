@@ -15,27 +15,30 @@
     (mkNode path [ "hyprland" ])
   ];
 
-  options = with lib; {
-    programs.caelestia-dots.hypr.services = {
-      gnomeKeyring = {
-        enable = mkEnableOption "GNOME Keyring service" // { default = true; };
-      };
-      polkitGnome = {
-        enable = mkEnableOption "GNOME Polkit agent" // { default = true; };
-      };
-      gammastep = {
-        enable = mkEnableOption "Gammastep color temperature adjustment" // { default = true; };
-        provider = mkOption {
-          type = types.str;
-          default = "geoclue2";
-          description = "Location provider for gammastep (geoclue2, manual, etc.)";
-        };
-      };
-      cliphist = {
-        enable = mkEnableOption "Clipboard history manager" // { default = true; };
-      };
-    };
-  };
+  # options = with lib; {
+  #   programs.caelestia-dots = {
+  #     enable = mkEnableOption "caelestia hypr module";
+  #   };
+  #   # .hypr.services = {
+  #   #   gnomeKeyring = {
+  #   #     enable = mkEnableOption "GNOME Keyring service" // { default = true; };
+  #   #   };
+  #   #   polkitGnome = {
+  #   #     enable = mkEnableOption "GNOME Polkit agent" // { default = true; };
+  #   #   };
+  #   #   gammastep = {
+  #   #     enable = mkEnableOption "Gammastep color temperature adjustment" // { default = true; };
+  #   #     provider = mkOption {
+  #   #       type = types.str;
+  #   #       default = "geoclue2";
+  #   #       description = "Location provider for gammastep (geoclue2, manual, etc.)";
+  #   #     };
+  #   #   };
+  #   #   cliphist = {
+  #   #     enable = mkEnableOption "Clipboard history manager" // { default = true; };
+  #   #   };
+  #   # };
+  # };
 
   config = {
     assertions = [
