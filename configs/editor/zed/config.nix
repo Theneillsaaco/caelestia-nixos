@@ -71,5 +71,4 @@
     mode = "system";
   };
   ui_font_size = 16;
-};
 }
