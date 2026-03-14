@@ -53,7 +53,7 @@
       systemd.variables = with lib; map (env: head (splitString "," env)) (use "hypr.hyprland.env" "env" [ ]);
     };
 
-    services = lib.mkIf config.programs.caelestia-dots.hypr.enable {
+    services = {
       gnome-keyring.enable = lib.mkDefault config.programs.caelestia-dots.hypr.services.gnomeKeyring.enable;
       polkit-gnome.enable = lib.mkDefault config.programs.caelestia-dots.hypr.services.polkitGnome.enable;
       gammastep = lib.mkIf config.programs.caelestia-dots.hypr.services.gammastep.enable {
