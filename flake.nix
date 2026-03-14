@@ -5,7 +5,7 @@
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
     caelestia-shell = {
-      url = "github:caelestia-dots/shell";
+      url = "github:Theneillsaaco/shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     caelestia-dots = {
