@@ -227,4 +227,4 @@ let
         ];
       };
 in
-use upstreamConf
+upstreamConf
