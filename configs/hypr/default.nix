@@ -7,44 +7,31 @@
 , use
 , ...
 }: {
-  # Hypr module
-
   imports = with mods; [
-    (mkRawMod path [ "variables" ]) # variables.conf
-    (mkRawMod path [ "scheme" ]) # scheme/default.conf
+    (mkRawMod path [ "variables" ])
+    (mkRawMod path [ "scheme" ])
     (mkNode path [ "hyprland" ])
   ];
-
-   options = with lib; {
-     programs.caelestia-dots.hypr.services = {
-      gnomeKeyring = {
-        enable = mkEnableOption "GNOME Keyring service" // { default = true; };
-      };
-      polkitGnome = {
-        enable = mkEnableOption "GNOME Polkit agent" // { default = true; };
-      };
+  options = with lib; {
+    programs.caelestia-dots.hypr.services = {
+      gnomeKeyring.enable = mkEnableOption "GNOME Keyring service" // { default = true; };
+      polkitGnome.enable = mkEnableOption "GNOME Polkit agent" // { default = true; };
       gammastep = {
         enable = mkEnableOption "Gammastep color temperature adjustment" // { default = true; };
         provider = mkOption {
           type = types.str;
           default = "geoclue2";
-          description = "Location provider for gammastep (geoclue2, manual, etc.)";
+          description = "Location provider for gammastep";
         };
       };
-      cliphist = {
-        enable = mkEnableOption "Clipboard history manager" // { default = true; };
-      };
+      cliphist.enable = mkEnableOption "Clipboard history manager" // { default = true; };
     };
   };
-
   config = {
-    assertions = [
-      {
-        assertion = config.wayland.windowManager.hyprland.enable || !config.programs.caelestia-dots.hypr.enable;
-        message = "hyprland must be enabled in wayland.windowManager to use caelestia hypr module";
-      }
-    ];
-
+    assertions = [{
+      assertion = config.wayland.windowManager.hyprland.enable || !config.programs.caelestia-dots.hypr.enable;
+      message = "hyprland must be enabled in wayland.windowManager to use caelestia hypr module";
+    }];
     wayland.systemd.target = lib.mkDefault "hyprland-session.target";
     wayland.windowManager.hyprland = lib.mkIf config.programs.caelestia-dots.hypr.enable {
       enable = true;
@@ -52,7 +39,6 @@
       settings = mod.settings;
       systemd.variables = with lib; map (env: head (splitString "," env)) (use "hypr.hyprland.env" "env" [ ]);
     };
-
     services = lib.mkIf config.programs.caelestia-dots.hypr.enable {
       gnome-keyring.enable = lib.mkDefault config.programs.caelestia-dots.hypr.services.gnomeKeyring.enable;
       polkit-gnome.enable = lib.mkDefault config.programs.caelestia-dots.hypr.services.polkitGnome.enable;
@@ -62,15 +48,12 @@
       };
       cliphist.enable = lib.mkDefault config.programs.caelestia-dots.hypr.services.cliphist.enable;
     };
-
     home.pointerCursor = {
       enable = true;
       name = mod.variables.cursorTheme;
       size = mod.variables.cursorSize;
       gtk.enable = true;
-      package =
-        lib.mkIf (mod.variables.cursorTheme == "Sweet-cursors")
-          pkgs.sweet-nova;
+      package = lib.mkIf (mod.variables.cursorTheme == "Sweet-cursors") pkgs.sweet-nova;
     };
   };
 }
