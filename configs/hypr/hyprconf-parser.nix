@@ -32,7 +32,7 @@ let
         if intMatch != null && !hasLeadingZero
         then lib.strings.toInt str
         else if floatMatch != null
-        then lib.strings.toDouble str
+        then lib.strings.fromJSON str
         else if str == "true"
         then true
         else if str == "false"
