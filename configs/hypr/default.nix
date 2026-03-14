@@ -66,7 +66,9 @@
       name = mod.variables.cursorTheme;
       size = mod.variables.cursorSize;
       gtk.enable = true;
-      package = lib.mkIf (mod.variables.cursorTheme == "Sweet-cursors") pkgs.sweet-nova;
+      package = if (mod.variables.cursorTheme == "Sweet-cursors") 
+        then pkgs.sweet-nova
+        else pkgs.vanilla-dmz;
     };
   };
 }
