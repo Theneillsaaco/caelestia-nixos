@@ -12,6 +12,7 @@
     (mkRawMod path [ "scheme" ])
     (mkNode path [ "hyprland" ])
   ];
+  
   options = with lib; {
     programs.caelestia-dots.hypr.services = {
       gnomeKeyring.enable = mkEnableOption "GNOME Keyring service" // { default = true; };
@@ -27,11 +28,13 @@
       cliphist.enable = mkEnableOption "Clipboard history manager" // { default = true; };
     };
   };
+  
   config = {
     assertions = [{
       assertion = config.wayland.windowManager.hyprland.enable || !config.programs.caelestia-dots.hypr.enable;
       message = "hyprland must be enabled in wayland.windowManager to use caelestia hypr module";
     }];
+    
     wayland.systemd.target = lib.mkDefault "hyprland-session.target";
     wayland.windowManager.hyprland = lib.mkIf config.programs.caelestia-dots.hypr.enable {
       enable = true;
@@ -39,15 +42,25 @@
       settings = mod.settings;
       systemd.variables = with lib; map (env: head (splitString "," env)) (use "hypr.hyprland.env" "env" [ ]);
     };
-    services = lib.mkIf config.programs.caelestia-dots.hypr.enable {
-      gnome-keyring.enable = lib.mkDefault config.programs.caelestia-dots.hypr.services.gnomeKeyring.enable;
-      polkit-gnome.enable = lib.mkDefault config.programs.caelestia-dots.hypr.services.polkitGnome.enable;
-      gammastep = lib.mkIf config.programs.caelestia-dots.hypr.services.gammastep.enable {
-        enable = true;
-        provider = config.programs.caelestia-dots.hypr.services.gammastep.provider;
-      };
-      cliphist.enable = lib.mkDefault config.programs.caelestia-dots.hypr.services.cliphist.enable;
-    };
+    
+    services = lib.mkMerge [
+      (lib.mkIf config.programs.caelestia-dots.hypr.services.gnomeKeyring.enable {
+        gnome-keyring.enable = true;
+      })
+      (lib.mkIf config.programs.caelestia-dots.hypr.services.polkitGnome.enable {
+        polkit-gnome.enable = true;
+      })
+      (lib.mkIf config.programs.caelestia-dots.hypr.services.gammastep.enable {
+        gammastep = {
+          enable = true;
+          provider = config.programs.caelestia-dots.hypr.services.gammastep.provider;
+        };
+      })
+      (lib.mkIf config.programs.caelestia-dots.hypr.services.cliphist.enable {
+        cliphist.enable = true;
+      })
+    ];
+    
     home.pointerCursor = {
       enable = true;
       name = mod.variables.cursorTheme;
