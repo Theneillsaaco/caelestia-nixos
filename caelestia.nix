@@ -24,6 +24,18 @@ in
   options = with lib; {
     programs.caelestia-dots = {
       enable = mkEnableOption "Enable Caelestia dotfiles";
+      hypr.services = {
+        gnomeKeyring.enable = lib.mkEnableOption "GNOME Keyring service" // { default = true; };
+        polkitGnome.enable = lib.mkEnableOption "GNOME Polkit agent" // { default = true; };
+        gammastep = {
+          enable = lib.mkEnableOption "Gammastep" // { default = true; };
+          provider = lib.mkOption {
+            type = lib.types.str;
+            default = "geoclue2";
+          };
+        };
+        cliphist.enable = lib.mkEnableOption "Clipboard history" // { default = true; };
+      };
 
       # # Module enable options
       # hypr = {
